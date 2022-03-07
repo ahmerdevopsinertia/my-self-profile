@@ -1,0 +1,31 @@
+{
+  "name": "my-self-profile",
+  "version": "1.0.0",
+  "description": "Project to display my self profile",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server",
+    "start": "node server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ahmerdevopsinertia/my-self-profile.git"
+  },
+  "keywords": [
+    "myselfprofile"
+  ],
+  "author": "Ahmer Saeed (Senior Software Engineer)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ahmerdevopsinertia/my-self-profile/issues"
+  },
+  "homepage": "https://github.com/ahmerdevopsinertia/my-self-profile#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
