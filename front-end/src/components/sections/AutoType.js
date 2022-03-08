@@ -11,46 +11,80 @@ import {
 const AutoType = () => {
   // let generalOutput = "Welcome, hope you are doing well !!!";
   const [generalOutput, setGeneralOutput] = useState([]);
-  const [output, setOutput] = useState([]);
-  const [delayToDel, setDelayToDel] = useState([]);
-  const [outputDelayToDel, setOutputDelayToDel] = useState([]);
- 
+  const [delayToDelete, setDelayToDelete] = useState([]);
+  let typeTextForMe;
 
   useEffect(() => {
-    setGeneralOutput("Welcome, hope you are doing well !!!");
     let mounted = true;
-    let endpoint = "profile";
-    setDelayToDel(2000);
-    setOutputDelayToDel(6000);
+    setDelayToDelete(2000);
+    setGeneralOutput("Welcome, hope you are doing well !!!");
 
-    // set this inside timeout
-
-    setTimeout(() => {
-      console.log("This will run after 5 second!");
-      setGeneralOutput("/profile");
-      setDelayToDel(4000);
-    }, 6000);
-
-    setTimeout(() => {
-      getProfile().then((response) => {
-        if (mounted) {
-          setOutput(response.data);
-          setTimeout(() => {
-            setGeneralOutput("/experience");
-            setOutputDelayToDel(6000);
-            getExperience().then((response) => {
-              setOutput(response.data);
+    typeTextForMe = () => {
+      setTimeout(() => {
+        setGeneralOutput("/profile");
+        setTimeout(() => {
+          getProfile().then((response) => {
+            if (mounted) {
+              setGeneralOutput(response.data);
+              setDelayToDelete(5000);
               setTimeout(() => {
-                setGeneralOutput("/skills");
-                getSkills().then((skills) => {
-                  setOutput(skills.data[0].skill);
-                });
-              }, 7000);
-            });
-          }, 7000);
-        }
-      });
-    }, 8000);
+                setGeneralOutput("/experience");
+                setTimeout(() => {
+                  getExperience().then((response) => {
+                    setGeneralOutput(response.data);
+                    setDelayToDelete(3000);
+                    setTimeout(() => {
+                      setGeneralOutput("/skills");
+                      setTimeout(() => {
+                        getSkills().then((skills) => {
+                          setGeneralOutput(skills.data[0].skill);
+                          setTimeout(() => {
+                            setGeneralOutput(typeTextForMe());
+                          }, 2000);
+                        });
+                      }, 2000);
+                    }, 3000);
+                  });
+                }, 2000);
+              }, 4000);
+            }
+          });
+        }, 2000);
+      }, 5000);
+    };
+
+    setTimeout(() => {
+      setGeneralOutput(typeTextForMe());
+    }, 3000);
+ 
+
+    // setTimeout(() => {
+    //   setGeneralOutput("/profile");
+    //   setTimeout(() => {
+    //     getProfile().then((response) => {
+    //       if (mounted) {
+    //         setGeneralOutput(response.data);
+    //         setTimeout(() => {
+    //           setGeneralOutput("/experience");
+    //           setTimeout(() => {
+    //             getExperience().then((response) => {
+    //               setGeneralOutput(response.data);
+    //               setTimeout(() => {
+    //                 setGeneralOutput("/skills");
+    //                 setTimeout(() => {
+    //                   getSkills().then((skills) => {
+    //                     setGeneralOutput(skills.data[0].skill);
+    //                   });
+    //                 }, 2000);
+    //               }, 3000);
+    //             });
+    //           }, 5000);
+    //         }, 6000);
+    //       }
+    //     });
+    //   }, 4000);
+    // }, 5000);
+
     // return () => clearTimeout(timer);
     return () => (mounted = false);
   }, []);
@@ -62,22 +96,8 @@ const AutoType = () => {
         textRef={generalOutput} // <string>
         writeSpeed={150} // <number>
         deleteSpeed={150} // <number>
-        delayToWrite={1000/2} // <number>
-        delayToDelete={delayToDel} // <number>
-      />
-      <BlinkCursor
-        active // <boolean>
-        blinkSpeed={500} // <number>
-      />
-      <br></br>
-      <br></br>
-      <AutoTyping
-        active // <boolean>
-        textRef={output} // <string>
-        writeSpeed={150} // <number>
-        deleteSpeed={150} // <number>
-        delayToWrite={1000} // <number>
-        delayToDelete={1000} // <number>
+        delayToWrite={0} // <number>
+        delayToDelete={delayToDelete} // <number>
       />
       <BlinkCursor
         active // <boolean>
