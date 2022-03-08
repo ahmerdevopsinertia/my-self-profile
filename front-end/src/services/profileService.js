@@ -13,3 +13,9 @@ export function getExperience() {
     data.json()
   );
 }
+
+export function getSkills() {
+    return fetch(`${webApiDomain}:${webApiPort}${webApiBaseUrl}/skills`).then((data) =>
+      data.json()
+    );
+  }
